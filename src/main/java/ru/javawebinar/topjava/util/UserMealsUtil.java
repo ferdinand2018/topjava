@@ -6,8 +6,10 @@ import ru.javawebinar.topjava.model.UserMealWithExcess;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserMealsUtil {
     public static void main(String[] args) {
@@ -28,12 +30,34 @@ public class UserMealsUtil {
     }
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        // TODO return filtered list with excess. Implement by cycles
-        return null;
+        List<UserMealWithExcess> userMealWithExcesses = new ArrayList<>();
+
+        meals.forEach(userMeal -> {
+            if ((userMeal.getDateTime().getHour() >= startTime.getHour() &&
+                    (userMeal.getDateTime().getHour() <= endTime.getHour()))) {
+                userMealWithExcesses.add(new UserMealWithExcess(
+                        userMeal.getDateTime(),
+                        userMeal.getDescription(),
+                        userMeal.getCalories(),
+                        userMeal.getCalories() > caloriesPerDay)
+                );
+            }
+        });
+        return userMealWithExcesses;
     }
 
     public static List<UserMealWithExcess> filteredByStreams(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        // TODO Implement by streams
-        return null;
+        List<UserMealWithExcess> userMealWithExcesses;
+        userMealWithExcesses = meals.stream()
+                .filter(userMeal -> userMeal.getDateTime().getHour() >= startTime.getHour() &&
+                        userMeal.getDateTime().getHour() <= endTime.getHour())
+                .map(userMeal -> new UserMealWithExcess(
+                        userMeal.getDateTime(),
+                        userMeal.getDescription(),
+                        userMeal.getCalories(),
+                        userMeal.getCalories() > caloriesPerDay
+                ))
+                .collect(Collectors.toList());
+        return userMealWithExcesses;
     }
 }
