@@ -11,12 +11,16 @@
 <hr>
 <h2>Meals</h2>
 
-<table cellspacing="0" border="1" cellpadding="5" width="600">
+<p><a href = "meals?action=insert">Create</a></p>
+
+<table cellspacing="0" border="1" cellpadding="5" width="800">
     <thead>
         <tr>
             <th align="center">Date</td>
             <th align="center">Description</td>
             <th align="center">Calories</td>
+            <th></td>
+            <th></td>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +32,12 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
+                <td align="center">
+                <a href="meals?action=edit&id=<c:out value="${meal.id}"/>">Update</a>
+                </td>
+                <td align="center">
+                <a href="meals?action=delete&id=<c:out value="${meal.id}"/>">Delete</a>
+                </td>
             </tr>
         </c:forEach>
     </tbody>
