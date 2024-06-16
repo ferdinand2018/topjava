@@ -16,27 +16,27 @@
 <table cellspacing="0" border="1" cellpadding="5" width="800">
     <thead>
         <tr>
-            <th align="center">Date</td>
-            <th align="center">Description</td>
-            <th align="center">Calories</td>
+            <th align="center">Date</th>
+            <th align="center">Description</th>
+            <th align="center">Calories</th>
             <th></td>
             <th></td>
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${mealsList}" var="meal">
-            <tr style = " color: <c:out value = "${meal.excess == true ? 'red' : 'green'}"/>">
+        <c:forEach items="${meals}" var="meal">
+            <tr style = "color:${meal.excess ? 'red' : 'green'}">
                 <td>
                 <fmt:parseDate value="${meal.dateTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime }"/>
+                <fmt:formatDate pattern="yyyy.MM.dd HH:mm" value="${ parsedDateTime }"/>
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
                 <td align="center">
-                <a href="meals?action=edit&id=<c:out value="${meal.id}"/>">Update</a>
+                <a href="meals?action=edit&id=${meal.id}">Update</a>
                 </td>
                 <td align="center">
-                <a href="meals?action=delete&id=<c:out value="${meal.id}"/>">Delete</a>
+                <a href="meals?action=delete&id=${meal.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
