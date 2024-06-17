@@ -41,10 +41,4 @@ public interface MealRepository {
      * @param id Integer
      */
     void delete(int id);
-
-
-
-
-
-
 }

@@ -24,8 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${requestScope.meals}" var="meal">
-            <jsp:useBean id = "meal" type="ru.javawebinar.topjava.model.MealTo"/>
+        <c:forEach items="${meals}" var="meal">
             <tr style = "color:${meal.excess ? 'red' : 'green'}">
                 <td>
                 <fmt:parseDate value="${meal.dateTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
