@@ -34,31 +34,33 @@ public class MealServlet extends HttpServlet {
         switch (action == null ? "default" : action) {
             case "delete":
                 int deletedId = Integer.parseInt(request.getParameter("id"));
+                log.info("Sending DELETE: /meals with ID = {}", deletedId);
                 repository.delete(deletedId);
-                log.info("Deleted meal with ID = {}", deletedId);
+                log.info("Successfully sent DELETE: /meals with ID = {}", deletedId);
                 response.sendRedirect("meals");
                 break;
             case "insert":
                 final Meal newMeal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1);
                 request.setAttribute("meal", newMeal);
+                log.info("Preparing POST: /meals");
                 request.getRequestDispatcher(MEAL_INSERT_OR_EDIT).forward(request, response);
-                log.info("Creating new meal");
                 break;
             case "edit":
                 final Meal editMeal = repository.getById(
                         Integer.parseInt(request.getParameter("id"))
                 );
                 request.setAttribute("meal", editMeal);
+                log.info("Preparing PUT: /meals with ID = {}", editMeal.getId());
                 request.getRequestDispatcher(MEAL_INSERT_OR_EDIT).forward(request, response);
-                log.info("Editing meal with ID = {}", editMeal.getId());
                 break;
             case "default":
             default:
-                log.info("Get all meals");
+                log.info("Sending GET: /meals");
                 request.setAttribute("meals", MealsUtil.getTos(
                         repository.getAll(),
                         MealsUtil.DEFAULT_CALORIES_PER_DAY)
                 );
+                log.info("Successfully sent GET: /meals");
                 request.getRequestDispatcher(MEAL_LIST).forward(request, response);
                 break;
         }
@@ -76,11 +78,13 @@ public class MealServlet extends HttpServlet {
         );
 
         if (mealId.isEmpty()) {
+            log.info("Sending POST: /meals with request body = {}", meal);
             repository.add(meal);
-            log.info("Successfully sent insert request with body  = {}", meal);
+            log.info("Successfully sent POST: /meals with body  = {}", meal);
         } else {
+            log.info("Sending PUT: /meals with request body = {}", meal);
             repository.edit(meal);
-            log.info("Successfully sent edit request with body = {}", meal);
+            log.info("Successfully sent PUT: /meals with body = {}", meal);
         }
         response.sendRedirect("meals");
     }

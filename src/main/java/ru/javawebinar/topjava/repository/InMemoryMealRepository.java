@@ -15,9 +15,7 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
-        getMeals().forEach(meal -> {
-            add(meal);
-        });
+        MealsUtil.meals.forEach(this::add);
     }
 
     @Override
@@ -33,7 +31,8 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public Meal add(Meal meal) {
         meal.setId(counter.incrementAndGet());
-        return repository.put(meal.getId(), meal);
+        repository.put(meal.getId(), meal);
+        return meal;
     }
 
     @Override
@@ -44,9 +43,5 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public void delete(int id) {
         repository.remove(id);
-    }
-
-    private static List<Meal> getMeals() {
-        return MealsUtil.meals;
     }
 }
