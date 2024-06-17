@@ -26,21 +26,21 @@ public interface MealRepository {
      *
      * @param meal Meal
      */
-    void add(Meal meal);
+    Meal add(Meal meal);
 
     /**
      * Edit meal by id
      *
      * @param meal Meal
      */
-    void edit(Meal meal);
+    Meal edit(Meal meal);
 
     /**
      * Delete meal by id
      *
      * @param id Integer
      */
-    void delete(Integer id);
+    void delete(int id);
 
 
 
