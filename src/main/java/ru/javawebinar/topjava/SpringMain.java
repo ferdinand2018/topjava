@@ -21,7 +21,6 @@ public class SpringMain {
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
             mealRestController.create(new Meal(
                     null,
-                    1,
                     LocalDateTime.now(),
                     "test description",
                     1000
