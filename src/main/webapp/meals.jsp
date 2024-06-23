@@ -25,19 +25,19 @@
         <input type="hidden" name="action" value="selectDateTime">
         <dl>
             <dt>От даты (включая)</dt>
-            <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
+            <dd><input type="date" name="startDate" value="${param.startDate}" required="required"></dd>
         </dl>
         <dl>
             <dt>От даты (включая)</dt>
-            <dd><input type="date" name="endDate" value="${param.endDate}"></dd>
+            <dd><input type="date" name="endDate" value="${param.endDate}" required="required"></dd>
         </dl>
         <dl>
             <dt>От времени (включая)</dt>
-            <dd><input type="time" name="startTime" value="${param.startTime}"></dd>
+            <dd><input type="time" name="startTime" value="${param.startTime}" required="required"></dd>
         </dl>
         <dl>
             <dt>До времени (исключая)</dt>
-            <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
+            <dd><input type="time" name="endTime" value="${param.endTime}" required="required"</dd>
         </dl>
         <button type="submit">Выбрать</button>
     </form>

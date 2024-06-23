@@ -72,7 +72,7 @@ public class MealServlet extends HttpServlet {
                 LocalTime startTime = LocalTime.parse(request.getParameter("startTime"));
                 LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
                 LocalTime endTime = LocalTime.parse(request.getParameter("endTime"));
-                request.setAttribute("meals", mealRestController.getByUserId(
+                request.setAttribute("meals", mealRestController.getAllByDateTime(
                         startDate,
                         startTime,
                         endDate,

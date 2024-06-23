@@ -20,7 +20,7 @@ import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
 
 @Controller
 public class MealRestController {
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private MealService service;
@@ -31,12 +31,12 @@ public class MealRestController {
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
     }
 
-    public List<MealTo> getByUserId(LocalDate startDate,
-                                    LocalTime startTime,
-                                    LocalDate endDate,
-                                    LocalTime endTime) {
+    public List<MealTo> getAllByDateTime(LocalDate startDate,
+                                         LocalTime startTime,
+                                         LocalDate endDate,
+                                         LocalTime endTime) {
         int userId = authUserId();
-        log.info("get by id={}", userId);
+        log.info("get by start date={}, start time={}, end date={}, end time={}", startDate, startTime, endDate, endTime);
         List<Meal> meal = service.getByDateTime(startDate, endDate, userId);
         return MealsUtil.getFilteredTos(meal, SecurityUtil.authUserCaloriesPerDay(), startTime, endTime);
     }
