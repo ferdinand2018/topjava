@@ -2,6 +2,8 @@ package ru.javawebinar.topjava.web;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
@@ -68,10 +70,10 @@ public class MealServlet extends HttpServlet {
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
             case "selectDateTime":
-                LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
-                LocalTime startTime = LocalTime.parse(request.getParameter("startTime"));
-                LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
-                LocalTime endTime = LocalTime.parse(request.getParameter("endTime"));
+                LocalDate startDate = getDate(request.getParameter("startDate"));
+                LocalTime startTime = getTime(request.getParameter("startTime"));
+                LocalDate endDate = getDate(request.getParameter("endDate"));
+                LocalTime endTime = getTime(request.getParameter("endTime"));
                 request.setAttribute("meals", mealRestController.getAllByDateTime(
                         startDate,
                         startTime,
@@ -87,6 +89,14 @@ public class MealServlet extends HttpServlet {
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
+    }
+
+    public static @Nullable LocalDate getDate(@Nullable String param) {
+        return StringUtils.hasLength(param) ? LocalDate.parse(param) : null;
+    }
+
+    public static @Nullable LocalTime getTime(@Nullable String param) {
+        return StringUtils.hasLength(param) ? LocalTime.parse(param) : null;
     }
 
     private int getId(HttpServletRequest request) {

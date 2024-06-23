@@ -30,7 +30,7 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public Meal save(Meal meal, int userId) {
         MealRepository meals = repository.computeIfAbsent(userId, uid -> new MealRepository());
-        return meals.saveMeal(meal);
+        return meals.save(meal);
     }
 
     @Override
@@ -67,17 +67,17 @@ public class InMemoryMealRepository implements MealRepository {
     private List<Meal> getAllByPredicate(int userId, Predicate<Meal> filter) {
         MealRepository meals = repository.get(userId);
         return meals == null ? Collections.emptyList() :
-                meals.getMeals().stream()
-                        .sorted(Comparator.comparing(Meal::getDateTime).reversed())
+                meals.get().stream()
                         .filter(filter)
+                        .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                         .collect(Collectors.toList());
     }
 
-    static class MealRepository {
+    private static class MealRepository {
         private static final AtomicInteger counter = new AtomicInteger(0);
         private final Map<Integer, Meal> map = new ConcurrentHashMap<>();
 
-        public Meal saveMeal(Meal meal) {
+        public Meal save(Meal meal) {
             if (meal.isNew()) {
                 meal.setId(counter.incrementAndGet());
                 map.put(meal.getId(), meal);
@@ -94,7 +94,7 @@ public class InMemoryMealRepository implements MealRepository {
             return map.get(id);
         }
 
-        public Collection<Meal> getMeals() {
+        public Collection<Meal> get() {
             return map.values();
         }
     }

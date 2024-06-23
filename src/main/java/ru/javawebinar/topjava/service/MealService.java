@@ -42,12 +42,10 @@ public class MealService {
     public List<Meal> getByDateTime(@Nullable LocalDate startDate,
                                     @Nullable LocalDate endDate,
                                     int userId) {
-        assert startDate != null;
-        assert endDate != null;
         return repository.getAllByDateTime(
                 userId,
-                startDate.atStartOfDay(),
-                endDate.plusDays(1).atStartOfDay()
+                startDate != null ? startDate.atStartOfDay() : LocalDate.MIN.atStartOfDay(),
+                endDate != null ? endDate.plusDays(1).atStartOfDay() : LocalDate.MAX.atStartOfDay()
         );
     }
 }

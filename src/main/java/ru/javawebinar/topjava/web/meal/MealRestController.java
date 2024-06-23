@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.web.meal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
@@ -31,10 +32,10 @@ public class MealRestController {
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
     }
 
-    public List<MealTo> getAllByDateTime(LocalDate startDate,
-                                         LocalTime startTime,
-                                         LocalDate endDate,
-                                         LocalTime endTime) {
+    public List<MealTo> getAllByDateTime(@Nullable LocalDate startDate,
+                                         @Nullable LocalTime startTime,
+                                         @Nullable LocalDate endDate,
+                                         @Nullable LocalTime endTime) {
         int userId = authUserId();
         log.info("get by start date={}, start time={}, end date={}, end time={}", startDate, startTime, endDate, endTime);
         List<Meal> meal = service.getByDateTime(startDate, endDate, userId);
