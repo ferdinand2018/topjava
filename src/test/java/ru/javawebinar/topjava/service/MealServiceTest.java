@@ -17,6 +17,7 @@ import java.time.Month;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -37,50 +38,50 @@ public class MealServiceTest {
 
     @Test
     public void create() {
-        Meal created = service.create(USER_MAEL, USER);
+        Meal created = service.create(userMeal, USER_ID);
         Integer newId = created.getId();
-        Meal newMeal = USER_MAEL;
+        Meal newMeal = userMeal;
         newMeal.setId(newId);
         assertMatch(created, newMeal);
-        assertMatch(service.get(newId, USER), newMeal);
+        assertMatch(service.get(newId, USER_ID), newMeal);
     }
 
     @Test
     public void update() {
-        Meal created = service.create(USER_MAEL_2, USER);
+        Meal created = service.create(userMeal2, USER_ID);
         Integer newId = created.getId();
         Meal updateMeal = new Meal(newId, LocalDateTime.of(2018, Month.FEBRUARY, 25, 7, 0), "Обновлённый завтрак", 456);
-        service.update(updateMeal, USER);
-        assertMatch(service.get(newId, USER), updateMeal);
+        service.update(updateMeal, USER_ID);
+        assertMatch(service.get(newId, USER_ID), updateMeal);
     }
 
     @Test
     public void duplicateMailCreate() {
         assertThrows(DataAccessException.class, () ->
-                service.create(USER_MAEL_1, USER));
+                service.create(userMeal1, USER_ID));
     }
 
     @Test
     public void delete() {
-        Meal created = service.create(ADMIN_MAEL, USER);
+        Meal created = service.create(adminMeal, USER_ID);
         Integer newId = created.getId();
-        service.delete(newId, USER);
-        assertThrows(NotFoundException.class, () -> service.get(newId, USER));
+        service.delete(newId, USER_ID);
+        assertThrows(NotFoundException.class, () -> service.get(newId, USER_ID));
     }
 
     @Test
     public void deletedNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, USER));
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND_USER, USER_ID));
     }
 
     @Test
     public void get() {
-        Meal created = service.create(USER_MAEL_3, USER);
-        assertMatch(service.get(USER_MAEL_3.getId(), USER), created);
+        Meal created = service.create(userMeal3, USER_ID);
+        assertMatch(service.get(userMeal3.getId(), USER_ID), created);
     }
 
     @Test
     public void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND, USER));
+        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND_USER, USER_ID));
     }
 }
