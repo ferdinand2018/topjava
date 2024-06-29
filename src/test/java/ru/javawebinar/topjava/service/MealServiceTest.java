@@ -59,21 +59,20 @@ public class MealServiceTest {
 
     @Test
     public void update() {
-        Meal updateMeal = getUpdated();
-        service.update(updateMeal, USER_ID);
-        assertMatch(service.get(updateMeal.getId(), USER_ID), getUpdated());
+        service.update(getUpdated(), USER_ID);
+        assertMatch(service.get(getUpdated().getId(), USER_ID), getUpdated());
     }
 
     @Test
     public void updateNotOwned() {
-        Meal updateMeal = userMeal1;
-        assertThrows(NotFoundException.class, () -> service.update(updateMeal, ADMIN_ID));
+        Meal meal = new Meal(userMeal1);
+        assertThrows(NotFoundException.class, () -> service.update(meal, ADMIN_ID));
     }
 
     @Test
     public void delete() {
-        Meal deletedMeal = userMeal1;
-        Integer id = deletedMeal.getId();
+        Meal meal = new Meal(userMeal1);
+        Integer id = meal.getId();
         service.delete(id, USER_ID);
         assertThrows(NotFoundException.class, () -> service.get(id, USER_ID));
     }
@@ -85,13 +84,13 @@ public class MealServiceTest {
 
     @Test
     public void deletedNotOwned() {
-        Meal deletedMeal = userMeal2;
-        assertThrows(NotFoundException.class, () -> service.delete(deletedMeal.getId(), ADMIN_ID));
+        Meal meal = new Meal(userMeal2);
+        assertThrows(NotFoundException.class, () -> service.delete(meal.getId(), ADMIN_ID));
     }
 
     @Test
     public void get() {
-        Meal meal = userMeal6;
+        Meal meal = new Meal(userMeal6);
         assertMatch(service.get(meal.getId(), USER_ID), meal);
     }
 
@@ -102,7 +101,7 @@ public class MealServiceTest {
 
     @Test
     public void getNotOwned() {
-        Meal meal = userMeal4;
+        Meal meal = new Meal(userMeal4);
         assertThrows(NotFoundException.class, () -> service.get(meal.getId(), ADMIN_ID));
     }
 
@@ -115,7 +114,7 @@ public class MealServiceTest {
 
     @Test
     public void getAllNotFound() {
-        List<Meal> actual = service.getAll(NOT_FOUND);
+        List<Meal> actual = service.getAll(UserTestData.NOT_FOUND);
         assertMatch(actual, EMPTY_LIST);
     }
 
@@ -149,7 +148,7 @@ public class MealServiceTest {
 
     @Test
     public void getBetweenInclusiveNotFound() {
-        List<Meal> actual = service.getBetweenInclusive(null, null, NOT_FOUND);
+        List<Meal> actual = service.getBetweenInclusive(null, null, UserTestData.NOT_FOUND);
         assertMatch(actual, EMPTY_LIST);
     }
 }

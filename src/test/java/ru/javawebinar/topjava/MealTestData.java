@@ -18,16 +18,16 @@ public class MealTestData {
     public static final int MEAL_ADMIN_ID = START_SEQ  + 10;
     public static final int NOT_FOUND = 10;
 
-    public static Meal userMeal1 = new Meal(MEAL_ID, LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
-    public static Meal userMeal2 = new Meal(MEAL_ID + 1, LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000);
-    public static Meal userMeal3 = new Meal(MEAL_ID + 2, LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500);
-    public static Meal userMeal4 = new Meal(MEAL_ID + 3, LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100);
-    public static Meal userMeal5 = new Meal(MEAL_ID + 4, LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000);
-    public static Meal userMeal6 = new Meal(MEAL_ID + 5, LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500);
-    public static Meal userMeal7 = new Meal(MEAL_ID + 6, LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410);
-    public static Meal adminMeal8 = new Meal(MEAL_ADMIN_ID, LocalDateTime.of(2020, Month.FEBRUARY, 1, 10, 0), "Завтрак админа", 321);
-    public static Meal adminMeal9 = new Meal(MEAL_ADMIN_ID + 1, LocalDateTime.of(2020, Month.FEBRUARY, 1, 13, 0), "Обед админа", 1155);
-    public static Meal adminMeal10 = new Meal(MEAL_ADMIN_ID + 2, LocalDateTime.of(2020, Month.FEBRUARY, 1, 20, 0), "Ужин админа", 121);
+    public static final Meal userMeal1 = new Meal(MEAL_ID, LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
+    public static final Meal userMeal2 = new Meal(MEAL_ID + 1, LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000);
+    public static final Meal userMeal3 = new Meal(MEAL_ID + 2, LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500);
+    public static final Meal userMeal4 = new Meal(MEAL_ID + 3, LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100);
+    public static final Meal userMeal5 = new Meal(MEAL_ID + 4, LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000);
+    public static final Meal userMeal6 = new Meal(MEAL_ID + 5, LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500);
+    public static final Meal userMeal7 = new Meal(MEAL_ID + 6, LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410);
+    public static final Meal adminMeal8 = new Meal(MEAL_ADMIN_ID, LocalDateTime.of(2020, Month.FEBRUARY, 1, 10, 0), "Завтрак админа", 321);
+    public static final Meal adminMeal9 = new Meal(MEAL_ADMIN_ID + 1, LocalDateTime.of(2020, Month.FEBRUARY, 1, 13, 0), "Обед админа", 1155);
+    public static final Meal adminMeal10 = new Meal(MEAL_ADMIN_ID + 2, LocalDateTime.of(2020, Month.FEBRUARY, 1, 20, 0), "Ужин админа", 121);
 
     public static Meal getNew() {
         return new Meal(null, LocalDateTime.of(2021, Month.JANUARY, 30, 10, 0), "Тестовый завтрак", 500);
