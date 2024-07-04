@@ -1,8 +1,12 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Ignore;
+import org.junit.AfterClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Stopwatch;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,8 +18,10 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertThrows;
+import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
@@ -26,11 +32,38 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 })
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-//@Ignore
 public class MealServiceTest {
+
+    private static final Logger log = getLogger("result");
+    private static final StringBuilder results = new StringBuilder();
 
     @Autowired
     private MealService service;
+
+    @Rule
+    public final Stopwatch STOPWATCH = new Stopwatch() {
+        @Override
+        protected void finished(long nanos, Description description) {
+            String result = String.format(
+                    "%-95s %7d",
+                    description.getDisplayName(),
+                    TimeUnit.NANOSECONDS.toMillis(nanos)
+            );
+            results.append(result).append('\n');
+            log.info(result + "ms\n");
+        }
+    };
+
+    @AfterClass
+    public static void afterAll() {
+        log.info(
+                "\n----------------------------------------------------------------------------------------------------------" +
+                        "\nTest                                                                                          Duration, ms" +
+                        "\n----------------------------------------------------------------------------------------------------------\n" +
+                        results +
+                        "\n----------------------------------------------------------------------------------------------------------"
+        );
+    }
 
     @Test
     public void delete() {
@@ -95,12 +128,12 @@ public class MealServiceTest {
 
     @Test
     public void getAll() {
-        assertMatch(service.getAll(USER_ID), meals);
+        MEAL_MATCHER.assertMatch(service.getAll(USER_ID), meals);
     }
 
     @Test
     public void getBetweenInclusive() {
-        assertMatch(service.getBetweenInclusive(
+        MEAL_MATCHER.assertMatch(service.getBetweenInclusive(
                         LocalDate.of(2020, Month.JANUARY, 30),
                         LocalDate.of(2020, Month.JANUARY, 30), USER_ID),
                 meal3, meal2, meal1);
@@ -108,7 +141,7 @@ public class MealServiceTest {
 
     @Test
     public void getBetweenWithNullDates() {
-        assertMatch(service.getBetweenInclusive(null, null, USER_ID), meals);
+        MEAL_MATCHER.assertMatch(service.getBetweenInclusive(null, null, USER_ID), meals);
     }
 
 }
