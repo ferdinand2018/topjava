@@ -19,7 +19,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_MATCHER;
 public class DataJpaMealServiceTest extends MealServiceTest {
 
     @Test
-    public void getByIdAndUserId() {
+    public void getWithUser() {
         Meal adminMeal = service.getWithUser(ADMIN_MEAL_ID, ADMIN_ID);
         MEAL_MATCHER.assertMatch(adminMeal, MealTestData.adminMeal1);
         USER_MATCHER.assertMatch(adminMeal.getUser(), UserTestData.admin);
@@ -29,5 +29,11 @@ public class DataJpaMealServiceTest extends MealServiceTest {
     public void getWithUserNotFound() {
         Assert.assertThrows(NotFoundException.class,
                 () -> service.getWithUser(MealTestData.NOT_FOUND, ADMIN_ID));
+    }
+
+    @Test
+    public void getWithUserNotOwn() {
+        Assert.assertThrows(NotFoundException.class,
+                () -> service.getWithUser(MealTestData.MEAL1_ID, ADMIN_ID));
     }
 }
