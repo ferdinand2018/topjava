@@ -14,18 +14,13 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import static ru.javawebinar.topjava.constants.WebConstants.*;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @Controller
 @RequestMapping("/meals")
 public class JspMealController extends AbstractMealController {
-
-    public static final String MEAL_FORM = "mealForm";
-    public static final String REDIRECT_MEALS = "redirect:/meals";
-    public static final String MEAL_PARAM = "meal";
-    public static final String MEALS_PARAM = "meals";
-    public static final String ID_PARAM = "id";
 
     @GetMapping("/create")
     public String create(Model model) {
