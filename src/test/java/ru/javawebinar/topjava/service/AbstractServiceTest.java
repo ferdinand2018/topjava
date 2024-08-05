@@ -48,7 +48,7 @@ public abstract class AbstractServiceTest {
         });
     }
 
-    protected boolean isJdnc() {
+    protected boolean isProfileNotJdnc() {
         return environment.acceptsProfiles(org.springframework.core.env.Profiles.of(
                 Profiles.JPA,
                 Profiles.DATAJPA

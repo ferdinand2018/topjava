@@ -13,8 +13,6 @@ import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ru.javawebinar.topjava.constants.WebConstants.*;
-
 @Controller
 public class RootController {
 
@@ -34,9 +32,9 @@ public class RootController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        log.info(USERS_PARAM);
-        model.addAttribute(USERS_PARAM, userService.getAll());
-        return USERS_PARAM;
+        log.info("users");
+        model.addAttribute("users", userService.getAll());
+        return "users";
     }
 
     @PostMapping("/users")
@@ -44,17 +42,17 @@ public class RootController {
         int userId = Integer.parseInt(request.getParameter("userId"));
         log.info("setUser {}", userId);
         SecurityUtil.setAuthUserId(userId);
-        return REDIRECT_MEALS;
+        return "redirect:/meals";
     }
 
     @GetMapping("/meals")
     public String getMeals(Model model) {
         model.addAttribute(
-                MEALS_PARAM,
+                "meals",
                 MealsUtil.getTos(
                         mealService.getAll(SecurityUtil.authUserId()),
                         SecurityUtil.authUserCaloriesPerDay()
                 ));
-        return MEALS_PARAM;
+        return "meals";
     }
 }

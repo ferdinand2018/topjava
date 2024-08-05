@@ -14,7 +14,6 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static ru.javawebinar.topjava.constants.WebConstants.*;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
@@ -25,19 +24,19 @@ public class JspMealController extends AbstractMealController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute(
-                MEAL_PARAM,
+                "meal",
                 new Meal(
                         LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                         "",
                         1000
                 ));
-        return MEAL_FORM;
+        return "mealForm";
     }
 
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
-        model.addAttribute(MEAL_PARAM, super.get(getId(request)));
-        return MEAL_FORM;
+        model.addAttribute("meal", super.get(getId(request)));
+        return "mealForm";
     }
 
     @PostMapping
@@ -48,19 +47,19 @@ public class JspMealController extends AbstractMealController {
                 Integer.parseInt(request.getParameter("calories"))
         );
 
-        if (request.getParameter(ID_PARAM).isEmpty()) {
+        if (request.getParameter("id").isEmpty()) {
             super.create(meal);
         } else {
             super.update(meal, getId(request));
         }
 
-        return REDIRECT_MEALS;
+        return "redirect:/meals";
     }
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         super.delete(getId(request));
-        return REDIRECT_MEALS;
+        return "redirect:/meals";
     }
 
     @GetMapping("/filter")
@@ -70,18 +69,18 @@ public class JspMealController extends AbstractMealController {
         LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
         LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
 
-        model.addAttribute(MEALS_PARAM, super.getBetween(
+        model.addAttribute("meals", super.getBetween(
                 startDate,
                 startTime,
                 endDate,
                 endTime
         ));
 
-        return MEALS_PARAM;
+        return "meals";
     }
 
     private int getId(HttpServletRequest request) {
-        String paramId = Objects.requireNonNull(request.getParameter(ID_PARAM));
+        String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
     }
 }
