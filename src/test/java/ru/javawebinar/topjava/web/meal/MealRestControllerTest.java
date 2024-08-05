@@ -92,9 +92,12 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @ParameterizedTest
     @MethodSource("getBetweenTestProvider")
-    void getBetween(String start, String end, List<MealTo> meals) throws Exception {
+    void getBetween(String startDate, String startTime, String endDate, String endTime, List<MealTo> meals) throws Exception {
 
-        perform(MockMvcRequestBuilders.get(REST_URI + start + end))
+        perform(MockMvcRequestBuilders.get(REST_URI + "between")
+                .param("startDate", startDate).param("startTime", startTime)
+                .param("endDate", endDate).param("endTime", endTime)
+        )
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(TO_MATCHER.contentJson(meals));
@@ -103,13 +106,19 @@ class MealRestControllerTest extends AbstractControllerTest {
     private static Stream<Arguments> getBetweenTestProvider() {
         return Stream.of(
                 arguments(
-                        "between?startDateTime=2020-01-30T07:00",
-                        "&endDateTime=2020-01-30T11:00:00",
+                        "2020-01-30",
+                        "00:00",
+                        "2020-01-31",
+                        "12:00",
                         List.of(
+                                createTo(meal5, true),
+                                createTo(meal4, true),
                                 createTo(meal1, false)
                         )
                 ),
                 arguments(
+                        "",
+                        "",
                         "",
                         "",
                         List.of(
@@ -123,8 +132,10 @@ class MealRestControllerTest extends AbstractControllerTest {
                         )
                 ),
                 arguments(
-                        "between?startDateTime=2030-01-01T00:00",
-                        "&endDateTime=2030-01-31T10:00:00",
+                        "2030-01-30",
+                        "00:00",
+                        "2030-01-31",
+                        "00:00",
                         List.of()
                 )
         );
