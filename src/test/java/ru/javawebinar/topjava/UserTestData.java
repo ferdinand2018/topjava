@@ -5,6 +5,7 @@ import ru.javawebinar.topjava.model.User;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
@@ -25,7 +26,9 @@ public class UserTestData {
     }
 
     public static User getNewAdmin() {
-        return new User(null, "NewAdmin", "newAdmin@gmail.com", "newPass", 1535, false, new Date(), Collections.singleton(Role.ADMIN));
+        return new User(null, "NewAdmin", "newAdmin@gmail.com", "newPass", 1535, false, new Date(),
+                List.of(Role.ADMIN, Role.USER)
+        );
     }
 
     public static User getUpdated() {

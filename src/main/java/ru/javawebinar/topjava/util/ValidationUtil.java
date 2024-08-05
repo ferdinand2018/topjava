@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.util;
 
-
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 import ru.javawebinar.topjava.model.AbstractBaseEntity;
@@ -11,8 +10,7 @@ import java.util.Set;
 
 public class ValidationUtil {
 
-    public static ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-    public static Validator validator = validatorFactory.getValidator();
+    public static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     private ValidationUtil() {
     }
