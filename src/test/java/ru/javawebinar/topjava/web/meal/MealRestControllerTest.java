@@ -59,7 +59,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(TO_MATCHER.contentJson(getTos(meals, user.getCaloriesPerDay())));
+                .andExpect(TO_MATCHER.contentJson(mealsTo));
     }
 
     @Test
@@ -76,6 +76,9 @@ class MealRestControllerTest extends AbstractControllerTest {
         meal.setId(id);
 
         getActions(REST_URI + id, meal);
+
+        MEAL_MATCHER.assertMatch(created, meal);
+        MEAL_MATCHER.assertMatch(service.get(id, USER_ID), meal);
     }
 
     @Test
@@ -117,10 +120,40 @@ class MealRestControllerTest extends AbstractControllerTest {
                         )
                 ),
                 arguments(
+                        "2020-01-30",
+                        "00:00",
+                        null,
+                        null,
+                        List.of(
+                                createTo(meal7, true),
+                                createTo(meal6, true),
+                                createTo(meal5, true),
+                                createTo(meal4, true),
+                                createTo(meal3, false),
+                                createTo(meal2, false),
+                                createTo(meal1, false)
+                        )
+                ),
+                arguments(
                         "",
                         "",
                         "",
                         "",
+                        List.of(
+                                createTo(meal7, true),
+                                createTo(meal6, true),
+                                createTo(meal5, true),
+                                createTo(meal4, true),
+                                createTo(meal3, false),
+                                createTo(meal2, false),
+                                createTo(meal1, false)
+                        )
+                ),
+                arguments(
+                        "",
+                        "",
+                        null,
+                        null,
                         List.of(
                                 createTo(meal7, true),
                                 createTo(meal6, true),
@@ -141,11 +174,11 @@ class MealRestControllerTest extends AbstractControllerTest {
         );
     }
 
-    private ResultActions getActions(String mealUri, Meal meal) throws Exception {
+    private ResultActions getActions(String mealUri, Meal expected) throws Exception {
         return perform(MockMvcRequestBuilders.get(mealUri))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEAL_MATCHER.contentJson(meal));
+                .andExpect(MEAL_MATCHER.contentJson(expected));
     }
 }

@@ -26,8 +26,8 @@
     <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="conversionService">
         <property name="formatters">
             <set>
-                <bean class="ru.javawebinar.topjava.util.CustomFormatter.CustomDateFormatter"/>
-                <bean class="ru.javawebinar.topjava.util.CustomFormatter.CustomTimeFormatter"/>
+                <bean class="ru.javawebinar.topjava.web.formetter.CustomFormatter.CustomDateFormatter"/>
+                <bean class="ru.javawebinar.topjava.web.formetter.CustomFormatter.CustomTimeFormatter"/>
             </set>
         </property>
     </bean>
