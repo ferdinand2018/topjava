@@ -9,6 +9,7 @@ import java.util.List;
 
 import static java.time.LocalDateTime.of;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.util.MealsUtil.createTo;
 
 public class MealTestData {
     public static final MatcherFactory.Matcher<Meal> MEAL_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Meal.class, "user");
@@ -30,13 +31,13 @@ public class MealTestData {
 
     public static final List<Meal> meals = List.of(meal7, meal6, meal5, meal4, meal3, meal2, meal1);
 
-    public static final MealTo mealTo1 = new MealTo(meal1.getId(), meal1.getDateTime(), meal1.getDescription(), meal1.getCalories(), false);
-    public static final MealTo mealTo2 = new MealTo(meal2.getId(), meal2.getDateTime(), meal2.getDescription(), meal2.getCalories(), false);
-    public static final MealTo mealTo3 = new MealTo(meal3.getId(), meal3.getDateTime(), meal3.getDescription(), meal3.getCalories(), false);
-    public static final MealTo mealTo4 = new MealTo(meal4.getId(), meal4.getDateTime(), meal4.getDescription(), meal4.getCalories(), true);
-    public static final MealTo mealTo5 = new MealTo(meal5.getId(), meal5.getDateTime(), meal5.getDescription(), meal5.getCalories(), true);
-    public static final MealTo mealTo6 = new MealTo(meal6.getId(), meal6.getDateTime(), meal6.getDescription(), meal6.getCalories(), true);
-    public static final MealTo mealTo7 = new MealTo(meal7.getId(), meal7.getDateTime(), meal7.getDescription(), meal7.getCalories(), true);
+    public static final MealTo mealTo1 = createTo(meal1, false);
+    public static final MealTo mealTo2 = createTo(meal2, false);
+    public static final MealTo mealTo3 = createTo(meal3, false);
+    public static final MealTo mealTo4 = createTo(meal4, true);
+    public static final MealTo mealTo5 = createTo(meal5, true);
+    public static final MealTo mealTo6 = createTo(meal6, true);
+    public static final MealTo mealTo7 = createTo(meal7, true);
 
     public static final List<MealTo> mealsTo = List.of(mealTo7, mealTo6, mealTo5, mealTo4, mealTo3, mealTo2, mealTo1);
 
