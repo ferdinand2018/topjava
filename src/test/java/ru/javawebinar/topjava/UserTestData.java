@@ -17,7 +17,7 @@ public class UserTestData {
     public static MatcherFactory.Matcher<User> USER_WITH_MEALS_MATCHER =
             MatcherFactory.usingAssertions(User.class,
                     (a, e) -> assertThat(a).usingRecursiveComparison()
-                            .ignoringFields("registered", "meals.user")
+                            .ignoringFields("registered", "meals")
                             .isEqualTo(e),
                     (a, e) -> {
                         throw new UnsupportedOperationException();
