@@ -43,6 +43,7 @@ public class UserTestData {
     public static User getUpdated() {
         User updated = new User(user);
         updated.setName("UpdatedName");
+        updated.setEmail("update@gmail.com");
         updated.setCaloriesPerDay(330);
         updated.setPassword("newPass");
         updated.setEnabled(false);
